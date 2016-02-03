@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOMServer = require('react-dom/server');
 
 var express = require('express');
+var moment = require('moment');
 var app = express();
 var logger = require('morgan');
 var fs = require('fs');
@@ -27,20 +28,29 @@ app.use(logger('common'));
 app.get('/', function (err, res) {
     'use strict';
 
-    //var App = require('./app/views/app.jsx');
-    var App = require('./app/components/app');
+    var App = require('./app/views/app.jsx');
+
+    var time = moment();
+    var posts = [
+        {
+            date: time
+        },
+        {
+            date: time
+        },
+        {
+            date: time
+        }
+    ];
 
     var body = ReactDOMServer.renderToString(
         React.createElement(App, {
-            initialCount: 7
+            posts: posts
         })
     );
 
-    template(body, function (err, html) {
-        if (err) {
-            throw err;
-        }
-
+    template(body, function(err, html){
+        if (err) throw err;
         res.send(html);
     });
 
