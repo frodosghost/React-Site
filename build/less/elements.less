@@ -1,0 +1,154 @@
+/*---------------------------------------------------
+    LESS Elements
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
+
+.gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
+    background: @color;
+    background: -webkit-gradient(linear,
+        left bottom,
+        left top,
+        color-stop(0, @start),
+        color-stop(1, @stop));
+    background: -ms-linear-gradient(bottom,
+        @start,
+        @stop);
+    background: -moz-linear-gradient(center bottom,
+        @start 0%,
+        @stop 100%);
+    background: -o-linear-gradient(@stop,
+        @start);
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
+}
+
+.gradientImage(@color: #F5F5F5, @start: #EEE, @stop: #FFF, @imageUrl, @imagePosition: no-repeat right 10px) {
+
+    background: @color;
+    background-image: url(@imageUrl) @imagePosition; // fallback
+
+    background: url(@imageUrl) @imagePosition, -moz-linear-gradient(top, @stop, @start); // FF 3.6+
+    background: url(@imageUrl) @imagePosition, -webkit-gradient(linear, 0 0, 0 100%, from(@stop), to(@start)); // Safari 4+, Chrome 2+
+    background: url(@imageUrl) @imagePosition, -webkit-linear-gradient(top, @stop, @start); // Safari 5.1+, Chrome 10+
+    background: url(@imageUrl) @imagePosition, -o-linear-gradient(top, @stop, @start); // Opera 11.10
+    background: url(@imageUrl) @imagePosition, linear-gradient(to bottom, @stop, @start); // Standard, IE10
+
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
+}
+
+.bgfade( @color, @fade ){
+    background-color: fadeout(@color, 100-@fade*100);
+    @rgbahex: ~`function(color, fade){var t = (Math.round(255*fade)).toString(16).toUpperCase();t=t.length==1?'0'+t:t;return '#'+t+color.substr(1)}("@{color}","@{fade}")`;
+    filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr=@{rgbahex}, endColorstr=@{rgbahex},GradientType=0 )";
+}
+
+.opacity(@opacity: 0.5) {
+    -moz-opacity: @opacity;
+    -khtml-opacity: @opacity;
+    -webkit-opacity: @opacity;
+    opacity: @opacity;
+    @opperc: @opacity * 100;
+    -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";
+    filter: ~"alpha(opacity=@{opperc})";
+}
+
+.rounded(@radius: 2px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.border-radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
+    -webkit-border-top-right-radius: @topright;
+    -webkit-border-bottom-right-radius: @bottomright;
+    -webkit-border-bottom-left-radius: @bottomleft;
+    -webkit-border-top-left-radius: @topleft;
+    -moz-border-radius-topright: @topright;
+    -moz-border-radius-bottomright: @bottomright;
+    -moz-border-radius-bottomleft: @bottomleft;
+    -moz-border-radius-topleft: @topleft;
+    border-top-right-radius: @topright;
+    border-bottom-right-radius: @bottomright;
+    border-bottom-left-radius: @bottomleft;
+    border-top-left-radius: @topleft;
+    .background-clip(padding-box);
+}
+
+.border-radius-right(@right: 0) {
+    -webkit-border-top-right-radius: @right;
+    -webkit-border-bottom-right-radius: @right;
+    -moz-border-radius-topright: @right;
+    -moz-border-radius-bottomright: @right;
+    border-top-right-radius: @right;
+    border-bottom-right-radius: @right;
+}
+
+.border-radius-left(@left: 0) {
+    -webkit-border-bottom-left-radius: @left;
+    -webkit-border-top-left-radius: @left;
+    -moz-border-radius-bottomleft: @left;
+    -moz-border-radius-topleft: @left;
+    border-bottom-left-radius: @left;
+    border-top-left-radius: @left;
+}
+
+.border-radius-top(@top: 0) {
+    -webkit-border-top-right-radius: @top;
+    -webkit-border-top-left-radius: @top;
+    -moz-border-radius-topright: @top;
+    -moz-border-radius-topleft: @top;
+    border-top-right-radius: @top;
+    border-top-left-radius: @top;
+}
+
+.border-radius-bottom(@bottom: 0) {
+    -webkit-border-bottom-right-radius: @bottom;
+    -webkit-border-bottom-left-radius: @bottom;
+    -moz-border-radius-bottomright: @bottom;
+    -moz-border-radius-bottomleft: @bottom;
+    border-bottom-right-radius: @bottom;
+    border-bottom-left-radius: @bottom;
+}
+
+.background-clip(@argument: padding-box) {
+    -moz-background-clip: @argument;
+    -webkit-background-clip: @argument;
+    background-clip: @argument;
+}
+
+.shadow(@topright: 3px, @bottomright: 2px, @bottomleft: 3px, @topleft: 3px, @color: #ccc) {
+  -moz-box-shadow:    @topright, @bottomright, @bottomleft, @topleft, @color;
+  -webkit-box-shadow: @topright, @bottomright, @bottomleft, @topleft, @color;
+  box-shadow:         @topright, @bottomright, @bottomleft, @topleft, @color;
+}
+
+.box-shadow(@shadow) {
+  -webkit-box-shadow: @shadow; // iOS <4.3 & Android <4.1
+     -moz-box-shadow: @shadow;
+          box-shadow: @shadow;
+}
+
+.debug(@colour: #A68A87) {
+    background: @colour;
+}
+
+/* http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/ */
+.vertical-align() {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+/*---------------------------------------------------
+    MIXINS
+  ---------------------------------------------------*/
+.textStrip(@colour: #FFFFFF) {
+    color: @white;
+    background: @colour;
+    font-weight: normal;
+    text-transform: uppercase;
+    padding: @baseSpacing;
+}
