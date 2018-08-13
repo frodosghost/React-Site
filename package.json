@@ -5,25 +5,25 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "start": "node ./index.js"
+        "start": "node ./index.js",
+        "build": "browserify -t reactify ./app/app.js -o ./public/js/bundle.js",
+        "watch": "watchify -t reactify ./app/app.js -o ./public/js/bundle.js -v"
     },
     "dependencies": {
         "classnames": "2.0.0",
-        "extract-text-webpack-plugin": "0.7.0",
         "json-loader": "0.5.1",
         "jsonp": "0.2.0",
         "babel": "^6.3.13",
         "babel-runtime": "^6.2.0",
         "jsx-loader": "0.12.2",
         "express": "^4.10.7",
-        "lodash": "~3.5.0",
+        "lodash": "~4.17.5",
         "morgan": "^1.5.1",
         "moment": "^2.10.6",
         "moment-timezone": "^0.3.1",
         "photon": "1.0.4",
         "react": "^0.14.1",
-        "react-dom": "^0.14.1",
-        "webpack": "1.7.3"
+        "react-dom": "^0.14.1"
     },
     "devDependencies": {
         "grunt": "~0.4.5",
@@ -34,6 +34,9 @@
         "grunt-contrib-uglify": "~0",
         "grunt-newer": "~1.1.0",
         "globule": "~0.2.0",
-        "debug": "~2"
+        "eslint": "^1.10.3",
+        "eslint-plugin-react": "^3.13.1",
+        "mocha": "^2.3.4",
+        "debug": "~2.6.9"
     }
 }
